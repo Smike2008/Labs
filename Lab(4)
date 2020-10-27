@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#define n 5
+
+int main() {
+	setlocale(LC_ALL,"Russian");
+	int mas[n] = {4,8,3,5,9};
+	int i = 0;
+	for (i = 0; i < n; i++) {
+		for (int j = 0; j < n - 1; j++) {
+			if (mas[j] > mas[j + 1]) {
+				int b = mas[j];
+				mas[j] = mas[j + 1];
+				mas[j + 1] = b;
+			}
+
+		}
+	}
+	printf("Массив по возрастанию ");
+	for (i = 0; i < n; i++) {
+		printf("%d ",mas[i]);
+	}
+	printf("\n");
+	for (i = 0; i < n; i++) {
+		for (int j = 0; j < n - 1; j++) {
+			if (mas[j] < mas[j + 1]) {
+				int b = mas[j];
+				mas[j] = mas[j + 1];
+				mas[j + 1] = b;
+			}
+
+		}
+	}
+	printf("Массив по убыванию ");
+	for (i = 0; i < n; i++) {
+		printf("%d ", mas[i]);
+	}
+	system("pause");
+	return 0;
+}
