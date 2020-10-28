@@ -5,7 +5,12 @@
 
 int main() {
 	setlocale(LC_ALL,"Russian");
-	int mas[n] = {4,8,3,5,9};
+	int mas[n];
+	printf("Введите 5 чисел массива \n");
+	for (int i = 0; i < n; i++) {
+		scanf_s("%d", &mas[i]);
+
+	}
 	int i = 0;
 	for (i = 0; i < n; i++) {
 		for (int j = 0; j < n - 1; j++) {
