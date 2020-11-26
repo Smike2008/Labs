@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <locale.h>
+#include <stdlib.h>
 #define n 3
 
 int main() {
@@ -7,7 +8,6 @@ int main() {
 	int mas[n][n];
 	int i, j ;
 	int a=0,temp=0;
-	int b;
 	printf("Введите число а ");
 	scanf_s("%d", &a);
 	printf("Заполните массив\n");
@@ -17,6 +17,7 @@ int main() {
 			scanf_s("%d", &mas[i][j]);
 		}
 	}
+	system("cls");
 	printf("Исходный массив:\n");
 	for (i = 0; i < n; i++) {
 
