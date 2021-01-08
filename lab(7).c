@@ -10,7 +10,7 @@ void main(void)
     int max = 0;
     line = (char*)malloc(SIZE*sizeof(char));
     gets_s(line,SIZE);
-    while (line[i] != '\0') // поиск максимальной длины слова и его начала
+    while (line[i] != '\0')
     {
         if ((line[i] != ' ') && (line[i] != '\0'))
         {
@@ -26,7 +26,7 @@ void main(void)
         i++;
     }
     i = nach;
-    while (i < (SIZE - max)) //перезапись
+    while (i < (SIZE - max))
     {
         line[i] = line[i + max];
         i++;
