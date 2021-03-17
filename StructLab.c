@@ -1,21 +1,23 @@
 #include<stdio.h>
 #include<conio.h>
 #include<locale.h>
+#include<Windows.h>
 #include <cstdlib>
+#define _CRT_SECURE_NO_WARNINGS
 
 struct pokupbase
-	
+
 {
-    //   имя
+	//   имя
 	char name[20];
-    // фамилия
+	// фамилия
 	char fam[30];
-    //номер телефона
-	int callnumber;
-    //домашний адрес
+	//номер телефона
+	char callnumber[20];
+	//домашний адрес
 	char homeadress[40];
 	//кредитная карта
-    char creditcard[20];
+	char creditcard[21];
 };
 
 struct pokupbase pokupateli[30];
@@ -28,9 +30,11 @@ int main()
 	int i, j;
 	int records = 1;
 	setlocale(LC_ALL, "russian");
-	point:
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+point:
 	system("cls");
-	printf("\tБаза данных\t\n");
+	printf("\n\tБаза данных\t\n");
 	printf("1. Добавить покупателя\n");
 	printf("2. Показать список покупателей\n");
 	printf("3. Редактирование параметров покупателя\n");
@@ -41,101 +45,149 @@ int main()
 	scanf_s("%d", &button);
 	switch (button)
 	{
-	case 1:
+	case 1:                                      // Ввод
 		if (records < 30) {
-			do
-			{
+			
 				system("cls");
 				printf("%d покупатель\n", records);
-				puts("введите фамилию: ");
+				puts("Введите имя: ");
 				fflush(stdin);
 				getchar();
-				gets_s(pokupateli[records].fam);
-				puts("введите имя: ");
-
 				gets_s(pokupateli[records].name);
-				puts("введите кредитку: ");
+				puts("Введите фамилию: ");
+
+				gets_s(pokupateli[records].fam);
+				puts("Введите кредитку: ");
 
 				gets_s(pokupateli[records].creditcard);
-				puts("введите адрес: ");
+				puts("Введите адрес: ");
 
 				gets_s(pokupateli[records].homeadress);
-				puts("введите номер телефона: ");
+				puts("Введите номер телефона: ");
 
-				scanf_s("%d", &pokupateli[records].callnumber);
+				gets_s(pokupateli[records].callnumber);
 				records++;
-				printf("продолжить? 1-да,0-нет\n");
-				scanf_s("%d", &i);
-			} while (i);
+			
 		}
 		else printf("Введено максимальное кол-во покупателей");
 		break;
 		i = 0;
-	case 2:
+	case 2:                                        // Вывод
 		system("cls");
-		for (i = 1; i < records; i++)
-		{
-			printf("\nПокупатель %d: %s %s\n",i, pokupateli[i].name, pokupateli[i].fam);
-			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
-			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
-			printf(" Номер телефона: %d\n", pokupateli[i].callnumber);
-			
+		if (records == 1) {
+			printf("Нет данных\n");
+			system("pause");
+			break;
 		}
-		system("pause");
-		break;
-	case 3:
-		system("cls");
-		int c;
-		printf("Введите: \n");
-		printf("1-для редактирования имени\n");
-		printf("2-для редактирования фамилии\n");
-		printf("3-для изменения адреса\n");
-		printf("4-для изменения номера телефона\n");
-		printf("5-для изменения кредитной карты\n");
-		scanf_s("%d", &c);
-		switch (c) {
-		case 1:
-			printf("Введите новое имя\n");
-			getchar();
-			gets_s(pokupateli[records].name);
-
-		};
-		system("pause");
-		break;
-	case 4:
 		for (i = 1; i < records; i++)
 		{
 			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
 			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
 			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
-			printf(" Номер телефона: %d\n", pokupateli[i].callnumber);
+			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
 
 		}
+		system("pause");
+		break;
+	case 3:                                // Редактирование 
+
+		system("cls");
+		int c;
+		for (i = 1; i < records; i++)
+		{
+			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
+			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
+			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
+			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
+
+		}
+		printf("\nВыберите номер покупателя,которого хотите редактировать\n");
+		printf("Или введите '0' для выхода обратно\n");
+		scanf_s("%d", &c);
+		if (c == 0) {
+			break;
+		}
+		int per;
+		for (int a = 1; a < 2; a++) {
+			printf("Введите: \n");
+			printf("1-для редактирования имени\n");
+			printf("2-для редактирования фамилии\n");
+			printf("3-для изменения адреса\n");
+			printf("4-для изменения номера телефона\n");
+			printf("5-для изменения кредитной карты\n");
+			scanf_s("%d", &per);
+			a++;
+		}
+		switch (per) {
+		case 1:
+			printf("Введите новое имя\n");
+			getchar();
+			gets_s(pokupateli[c].name);
+			break;
+		case 2:
+			printf("Введите новую фамилию\n");
+			getchar();
+			gets_s(pokupateli[c].fam);
+			break;
+		case 3:
+			printf("Введите новый адрес\n");
+			getchar();
+			gets_s(pokupateli[c].homeadress);
+			break;
+		case 4:
+			printf("Введите новый номер телефона\n");
+			getchar();
+			gets_s(pokupateli[c].callnumber);
+			break;
+		case 5:
+			printf("Введите новую кредитку\n");
+			getchar();
+			gets_s(pokupateli[c].creditcard);
+			break;
+
+		}
+		break;
+	case 4:                                       // Удаление
+		for (i = 1; i < records; i++)
+		{
+			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
+			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
+			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
+			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
+
+		}
+		i = 1;
 		int d;        //номер записи, которую нужно удалить
-		printf("\nВведите номер записи, которую необходимо удалить\n");
-		printf("Если необходимо удалить все записи,нажмите '99'\n");
+		printf("\nВведите номер покупателя, которого необходимо удалить\n");
 		scanf_s("%d", &d);
 		if (d != 99)
 		{
-			for (int i = (d - 1); i < records; i++) //цикл для удаления заданной записи, начинаем цикл с удаляемой записи
+			for (int i = d; i < records; i++) //цикл для удаления заданной записи, начинаем цикл с удаляемой записи
 				pokupateli[i] = pokupateli[i + 1]; //замещаем текущую запись следующей за ней
 			records = records - 1; //уменяьшаем счетчик полных записей на 1
 		}
 		if (d == 99)
 		{
-			for (int i = 0; i < 30; i++)//цикл по все записям от первой до 30-ой
-				pokupateli[i] = tmp; //замещаем каждую структуру в массиве пустой структурой
-			sch = 0; //счетчик структур обнуляем, т.к. все записи удалены
+			for (int i = 0; i < 30; i++)
+				pokupateli[i] = tmp;
+			records = 0; //счетчик структур обнуляем, т.к. все записи удалены
 		}
 		break;
-	case 7:
+	case 5:                                      // Поиск пока никакой
+		
+
+
+	case 7:                                      // Выход
 		exit(0);
 
 
 	default: printf("Неверный выбор \n");
 	}
 
-	goto point;	
+	goto point;
 	_getch();
 	return 0;
+}
+void output() {
+	
 }
