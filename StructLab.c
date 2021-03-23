@@ -1,3 +1,4 @@
+
 #include<stdio.h>
 #include<conio.h>
 #include<locale.h>
@@ -20,7 +21,7 @@ struct pokupbase
 	char creditcard[21];
 };
 
-struct pokupbase pokupateli[30];
+struct pokupbase pokupateli[30], t;
 struct pokupbase tmp;
 int sch;
 
@@ -39,6 +40,7 @@ point:
 	printf("2. Показать список покупателей\n");
 	printf("3. Редактирование параметров покупателя\n");
 	printf("4. Удаление покупателя из списка\n");
+	printf("5. Сортировка покупателей\n");
 
 	printf("7. Выход\n");
 	int button;
@@ -47,27 +49,27 @@ point:
 	{
 	case 1:                                      // Ввод
 		if (records < 30) {
-			
-				system("cls");
-				printf("%d покупатель\n", records);
-				puts("Введите имя: ");
-				fflush(stdin);
-				getchar();
-				gets_s(pokupateli[records].name);
-				puts("Введите фамилию: ");
 
-				gets_s(pokupateli[records].fam);
-				puts("Введите кредитку: ");
+			system("cls");
+			printf("%d покупатель\n", records);
+			puts("Введите имя: ");
+			fflush(stdin);
+			getchar();
+			gets_s(pokupateli[records].name);
+			puts("Введите фамилию: ");
 
-				gets_s(pokupateli[records].creditcard);
-				puts("Введите адрес: ");
+			gets_s(pokupateli[records].fam);
+			puts("Введите кредитку: ");
 
-				gets_s(pokupateli[records].homeadress);
-				puts("Введите номер телефона: ");
+			gets_s(pokupateli[records].creditcard);
+			puts("Введите адрес: ");
 
-				gets_s(pokupateli[records].callnumber);
-				records++;
-			
+			gets_s(pokupateli[records].homeadress);
+			puts("Введите номер телефона: ");
+
+			gets_s(pokupateli[records].callnumber);
+			records++;
+
 		}
 		else printf("Введено максимальное кол-во покупателей");
 		break;
@@ -81,7 +83,7 @@ point:
 		}
 		for (i = 1; i < records; i++)
 		{
-			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
+			printf("\n Покупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
 			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
 			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
 			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
@@ -95,15 +97,20 @@ point:
 		int c;
 		for (i = 1; i < records; i++)
 		{
-			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
+			printf("\n Покупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
 			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
 			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
 			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
 
 		}
+	cpoint:
 		printf("\nВыберите номер покупателя,которого хотите редактировать\n");
 		printf("Или введите '0' для выхода обратно\n");
 		scanf_s("%d", &c);
+		if (c > records - 1) {
+			printf("Неверный ввод");
+			goto cpoint;
+		}
 		if (c == 0) {
 			break;
 		}
@@ -150,7 +157,7 @@ point:
 	case 4:                                       // Удаление
 		for (i = 1; i < records; i++)
 		{
-			printf("\nПокупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
+			printf("\n Покупатель %d: %s %s\n", i, pokupateli[i].name, pokupateli[i].fam);
 			printf(" Кредитка: %s\n", pokupateli[i].creditcard);
 			printf(" Адрес покупателя: %s\n", pokupateli[i].homeadress);
 			printf(" Номер телефона: %s\n", pokupateli[i].callnumber);
@@ -173,10 +180,67 @@ point:
 			records = 0; //счетчик структур обнуляем, т.к. все записи удалены
 		}
 		break;
-	case 5:                                      // Поиск пока никакой
-		
-
-
+	case 5:        // Сортировка покупателей
+		int choice5;
+		printf("По какому параметру произвести сортировку?\n");
+		printf("1 - имя\n");
+		printf("2 - фамилия\n");
+		printf("3 - адрес\n");
+		printf("4 - кредитная карта\n");
+		printf("5 - номер телефона\n");
+		printf("0 - для возврата\n");
+		point5:
+		scanf_s("%d", &choice5);
+		if (choice5 > 5) {
+			printf("Ошибка ввода\n");
+			goto point5;
+		}
+		switch (choice5) {
+		case 0:
+			goto point;
+			break;
+		case 1:
+			for (i = 0; i < records; i++)
+				for (j = i + 1; j < records; j++)
+					if (strcmp(pokupateli[i].name, pokupateli[j].name) > 0)
+					{
+						t = pokupateli[i]; pokupateli[i] = pokupateli[j]; pokupateli[j] = t;
+					}
+			break;
+		case 2:
+			for (i = 0; i < records; i++)
+				for (j = i + 1; j < records; j++)
+					if (strcmp(pokupateli[i].fam, pokupateli[j].fam) > 0)
+					{
+						t = pokupateli[i]; pokupateli[i] = pokupateli[j]; pokupateli[j] = t;
+					}
+			break;
+		case 3:
+			for (i = 0; i < records; i++)
+				for (j = i + 1; j < records; j++)
+					if (strcmp(pokupateli[i].homeadress, pokupateli[j].homeadress) > 0)
+					{
+						t = pokupateli[i]; pokupateli[i] = pokupateli[j]; pokupateli[j] = t;
+					}
+			break;
+		case 4:
+			for (i = 0; i < records; i++)
+				for (j = i + 1; j <records; j++)
+					if (strcmp(pokupateli[i].creditcard, pokupateli[j].creditcard) > 0)
+					{
+						t = pokupateli[i]; pokupateli[i] = pokupateli[j]; pokupateli[j] = t;
+					}
+			break;
+		case 5:
+			for (i = 0; i < records; i++)
+				for (j = i + 1; j < records; j++)
+					if (strcmp(pokupateli[i].callnumber, pokupateli[j].callnumber) > 0)
+					{
+						t = pokupateli[i]; pokupateli[i] = pokupateli[j]; pokupateli[j] = t;
+					}
+			break;
+		}
+		break;
 	case 7:                                      // Выход
 		exit(0);
 
@@ -187,7 +251,4 @@ point:
 	goto point;
 	_getch();
 	return 0;
-}
-void output() {
-	
 }
