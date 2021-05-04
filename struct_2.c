@@ -69,32 +69,70 @@ point:
 		if (records < 30) {
 
 			system("cls");
-			printf(ANSI_COLOR_GREEN	"%d студент\n", records);
+			printf(ANSI_COLOR_GREEN	"Как вы хотите заполнить базу данных?\n");
+			printf(ANSI_COLOR_GREEN	"1 -ФИО,Рост,вес\n");
+			printf(ANSI_COLOR_GREEN	"2 -ФИО,Рост,вес,холестерин,группа крови\n");
+			int button2;
+				check = scanf_s("%d", &button2);
+				while (check == 0 || button2<1 || button2>2) {
+				getchar();
+				check = scanf_s("%d", &button2);
 
-			puts(ANSI_COLOR_GREEN	"Введите имя: "					ANSI_COLOR_RESET);
-			fflush(stdin);
-			getchar();
-			gets_s(student[records].name);
-			puts(ANSI_COLOR_GREEN	"Введите фамилию: "			    ANSI_COLOR_RESET);
-			gets_s(student[records].fam);
-
-
-			puts(ANSI_COLOR_GREEN	"Введите отчество: "			ANSI_COLOR_RESET);
-			gets_s(student[records].otch);
-
-
-			puts(ANSI_COLOR_GREEN	"Введите рост: "				ANSI_COLOR_RESET);
-			gets_s(student[records].un.med2.height);
+				}
+				switch (button2) {
+				case 1:
+					printf(ANSI_COLOR_GREEN	"%d студент\n", records);
 
 
-			puts(ANSI_COLOR_GREEN	"Введите вес: "					ANSI_COLOR_RESET);
-			gets_s(student[records].un.med2.weight);
+					puts(ANSI_COLOR_GREEN	"Введите имя: "					ANSI_COLOR_RESET);
+					fflush(stdin);
+					getchar();
+					gets_s(student[records].name);
 
-			puts(ANSI_COLOR_GREEN	"Введите уровень холестерина: " ANSI_COLOR_RESET);
-			gets_s(student[records].un.med2.holesterin);
+					puts(ANSI_COLOR_GREEN	"Введите фамилию: "			    ANSI_COLOR_RESET);
+					gets_s(student[records].fam);
 
-			puts(ANSI_COLOR_GREEN	"Введите группу крови: "		ANSI_COLOR_RESET);
-			gets_s(student[records].un.med2.blood);
+
+					puts(ANSI_COLOR_GREEN	"Введите отчество: "			ANSI_COLOR_RESET);
+					gets_s(student[records].otch);
+
+
+					puts(ANSI_COLOR_GREEN	"Введите рост: "				ANSI_COLOR_RESET);
+					gets_s(student[records].un.med1.height);
+
+
+					puts(ANSI_COLOR_GREEN	"Введите вес: "					ANSI_COLOR_RESET);
+					gets_s(student[records].un.med1.weight);
+					break;
+				case 2:
+					printf(ANSI_COLOR_GREEN	"%d студент\n", records);
+
+					puts(ANSI_COLOR_GREEN	"Введите имя: "					ANSI_COLOR_RESET);
+					fflush(stdin);
+					getchar();
+					gets_s(student[records].name);
+
+					puts(ANSI_COLOR_GREEN	"Введите фамилию: "			    ANSI_COLOR_RESET);
+					gets_s(student[records].fam);
+
+
+					puts(ANSI_COLOR_GREEN	"Введите отчество: "			ANSI_COLOR_RESET);
+					gets_s(student[records].otch);
+
+
+					puts(ANSI_COLOR_GREEN	"Введите рост: "				ANSI_COLOR_RESET);
+					gets_s(student[records].un.med2.height);
+
+
+					puts(ANSI_COLOR_GREEN	"Введите вес: "					ANSI_COLOR_RESET);
+					gets_s(student[records].un.med2.weight);
+
+					puts(ANSI_COLOR_GREEN	"Введите уровень холестерина: " ANSI_COLOR_RESET);
+					gets_s(student[records].un.med2.holesterin);
+
+					puts(ANSI_COLOR_GREEN	"Введите группу крови: "		ANSI_COLOR_RESET);
+					gets_s(student[records].un.med2.blood);
+				}
 			records++;
 
 		}
@@ -103,6 +141,7 @@ point:
 		}
 		break;
 		i = 0;
+
 	case 2:                                        // Вывод
 		system("cls");
 		if (records == 1) {
@@ -110,6 +149,7 @@ point:
 			system("pause");
 			break;
 		}
+
 		for (i = 1; i < records; i++)
 		{
 			printf(ANSI_COLOR_GREEN	"\n Студент %d:"					ANSI_COLOR_RESET" %s %s %s\n", i, student[i].fam, student[i].name, student[i].otch);
@@ -121,6 +161,7 @@ point:
 		}
 		system("pause");
 		break;
+
 	case 3:                                // Редактирование 
 
 		system("cls");
@@ -243,6 +284,10 @@ point:
 		if (d == 555) {
 			goto point;
 		}
+		if (records < 1) {
+			
+			break;
+		}
 
 		if (d != 99)
 		{
@@ -256,6 +301,10 @@ point:
 			for (int i = 0; i < 30; i++)
 				student[i] = tmp;
 			records = 0; //счетчик структур обнуляем, т.к. все записи удалены
+		}
+		if (records < 1) {
+			records = 1;
+			break;
 		}
 		break;
 	case 5:        // Сортировка покупателей
@@ -347,6 +396,7 @@ point:
 
 
 	default: printf("Неверный выбор \n");
+		system("pause");
 	}
 
 	goto point;
